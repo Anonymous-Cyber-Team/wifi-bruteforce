@@ -8,18 +8,17 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 /**
- * Created by Faizan Ahmad on 1/1/2017.
+ * Devil-X WiFi Bruteforce 2.0
+ * Developer: MD Shamim | Devil-X Studios
  */
 public class ConnectivityBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("RECEIVEDDDDDDDDDDDD");
         NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
         if(info != null && info.isConnected()) {
-            // Do your work.
-            System.out.println("CONNECTEDDDDDDDDDDDDDDDDDDD");
-            // e.g. To check the Network Name or other info:
-
+            WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            String ssid = wifiInfo.getSSID();
         }
     }
 }

@@ -9,7 +9,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
- * Created by Faizan Ahmad on 1/1/2017.
+ * Devil-X WiFi Bruteforce 2.0
+ * Developer: MD Shamim | Devil-X Studios
  */
 public class InstructionsClass extends Activity {
 
@@ -22,7 +23,17 @@ public class InstructionsClass extends Activity {
         );
         setContentView(R.layout.instruction_layout);
         TextView instruction = (TextView) findViewById(R.id.textView4);
-        instruction.setText("This is the first application of its kind that I have seen. There is no need to root the device. The app will try 10,000 most common passwords on the access point and will let you know if it is able to crack the password. Here are a few more instructions.\n\n1. Try turning wifi on before cracking process begins.\n2.The signal strength of the access point should be good.\n3.Try cracking passwords of access points which have WPA/WPA2/WEP security.\n4.Contact fsecurify@gmail.com in case of any problem. We are always here to help.");
+        instruction.setText("🔥 Devil-X WiFi Bruteforce 2.0\nLead Developer: MD Shamim\nStudio: Devil-X Studios\n\n" +
+                "নির্দেশিকা ও ব্যবহারের নিয়মাবলী:\n\n" +
+                "১. আক্রমণ শুরুর আগে ফোনের ওয়াইফাই চালু করে নিন।\n" +
+                "২. টার্গেট ওয়াইফাই রাউটারের সিগন্যাল যথেষ্ট শক্তিশালী হওয়া প্রয়োজন।\n" +
+                "৩. WPA / WPA2 / WEP এনক্রিপশনের নেটওয়ার্কে পরীক্ষা করা যাবে।\n" +
+                "৪. বেসিক প্ল্যানে অ্যাপের বিল্ট-ইন ১০,০০০ শীর্ষ পাসওয়ার্ড স্বয়ংক্রিয়ভাবে পরীক্ষা করা হয়।\n" +
+                "৫. স্ট্যান্ডার্ড ও প্রো প্ল্যানে নিজস্ব পাসওয়ার্ড লিস্ট ও স্মার্ট প্রেডিকশন সক্রিয় থাকে।\n\n" +
+                "যোগাযোগ ও সহায়তা:\n" +
+                "Telegram: @shamim_vaiya\n" +
+                "WhatsApp: +8801540580575\n" +
+                "Email: shamimvaiyaofficial@gmail.com");
     }
 
     @Override

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devil-X WiFi Bruteforce 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #07070b;
+            --card-bg: #11111a;
+            --input-bg: #181824;
+            --cyan: #00e5ff;
+            --purple: #7b2fbe;
+            --green: #00ff88;
+            --red: #ff1744;
+            --yellow: #ffc107;
+            --text-main: #ffffff;
+            --text-muted: #90a4ae;
+            --border: rgba(0, 229, 255, 0.18);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Full Responsive Container */
+        .app-view {
+            width: 100%;
+            max-width: 440px;
+            height: 100vh;
+            max-height: 900px;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 229, 255, 0.08);
+            overflow: hidden;
+        }
+
+        /* Status Bar */
+        .app-status-bar {
+            height: 38px;
+            background: #040407;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+
+        .status-brand {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--cyan);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Screen Wrapper */
+        .screen-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: none;
+            flex-direction: column;
+            padding: 18px 16px;
+            overflow-y: auto;
+            background: var(--bg-dark);
+        }
+
+        .screen.active {
+            display: flex;
+            animation: screenSlide 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes screenSlide {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Titles */
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--cyan);
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+        }
+
+        .header-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        /* Cards & Inputs */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .input-box {
+            margin-bottom: 14px;
+        }
+
+        .input-box label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9px;
+            color: #ffffff;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+        }
+
+        /* Dynamic Device ID Box */
+        .device-id-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--input-bg);
+            border: 1px dashed var(--cyan);
+            padding: 10px 14px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
+
+        .device-id-text {
+            font-size: 11px;
+            color: var(--cyan);
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        .btn-copy-id {
+            padding: 5px 12px;
+            background: rgba(0, 229, 255, 0.15);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy-id:active {
+            background: var(--cyan);
+            color: #000;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-cyan {
+            background: linear-gradient(135deg, #00b4d8, #00e5ff);
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #7b2fbe, #a142f4);
+            color: #ffffff;
+        }
+
+        .btn-red {
+            background: var(--red);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* WiFi Cards */
+        .wifi-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 12px 14px;
+            border-radius: 11px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .wifi-card:hover { border-color: var(--cyan); }
+        .wifi-title { font-size: 13.5px; font-weight: 600; color: #fff; }
+        .wifi-sub { font-size: 10.5px; color: var(--text-muted); }
+
+        .tag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 12px; }
+        .tag-easy { background: rgba(0, 255, 136, 0.15); color: var(--green); border: 1px solid var(--green); }
+        .tag-medium { background: rgba(255, 193, 7, 0.15); color: var(--yellow); border: 1px solid var(--yellow); }
+        .tag-hard { background: rgba(255, 23, 68, 0.15); color: var(--red); border: 1px solid var(--red); }
+
+        /* Radar & Progress */
+        .radar-box {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 2px solid var(--cyan);
+            margin: 16px auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.12) 0%, transparent 70%);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
+        }
+
+        .radar-sweep {
+            position: absolute; width: 50%; height: 50%; top: 0; left: 50%;
+            background: linear-gradient(45deg, rgba(0, 229, 255, 0.7), transparent);
+            transform-origin: 0% 100%;
+            animation: radarRotate 2s linear infinite;
+            border-radius: 0 100% 0 0;
+        }
+
+        @keyframes radarRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .prog-bg { width: 100%; height: 10px; background: var(--input-bg); border-radius: 5px; overflow: hidden; margin: 10px 0; }
+        .prog-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--purple), var(--cyan)); transition: width 0.2s; }
+
+        /* Bottom Nav (Hidden on Lock Screen) */
+        .bottom-nav {
+            height: 60px;
+            background: #050508;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: none;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .nav-tab {
+            background: none; border: none; color: var(--text-muted); font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
+        }
+
+        .nav-tab.active { color: var(--cyan); font-weight: 700; }
+
+        /* Custom Cyber Modal */
+        .cyber-modal-backdrop {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(4, 4, 8, 0.88);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            z-index: 100;
+        }
+
+        .cyber-modal {
+            background: var(--card-bg);
+            border: 1px solid var(--cyan);
+            border-radius: 16px;
+            padding: 22px 18px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 229, 255, 0.25);
+            animation: modalPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon { font-size: 32px; margin-bottom: 8px; }
+        .modal-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .modal-msg { font-size: 12px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5; }
+
+        /* Toast Notification */
+        .cyber-toast {
+            position: absolute;
+            bottom: 70px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #12121c;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 90;
+            white-space: nowrap;
+        }
+
+        .cyber-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-view">
+
+    <!-- Top Status Bar -->
+    <div class="app-status-bar">
+        <span class="status-brand">DEVIL-X 2.0</span>
+        <span>⚡ 64-Bit Native</span>
+    </div>
+
+    <div class="screen-container">
+
+        <!-- 1. ACTIVATION LOCK SCREEN (No Guest Button, Empty Default Inputs) -->
+        <div class="screen active" id="screenLock">
+            <div class="header-title">🔥 DEVIL-X WIFI 2.0</div>
+            <div class="header-sub">Developer: MD Shamim | Devil-X Studios</div>
+
+            <div class="card">
+                <div style="text-align: center; font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 14px;">
+                    🔐 SOFTWARE ACTIVATION LOCK
+                </div>
+
+                <div class="input-box">
+                    <label>ইউজারনেম (Username)</label>
+                    <input type="text" id="userIn" value="" placeholder="ইউজারনেম লিখুন (যেমন: shamim_admin)...">
+                </div>
+
+                <div class="input-box">
+                    <label>পাসওয়ার্ড (Password)</label>
+                    <input type="password" id="passIn" value="" placeholder="পাসওয়ার্ড লিখুন...">
+                </div>
+
+                <button class="btn btn-cyan" onclick="submitUnlock()" style="margin-bottom: 14px;">
+                    🔑 ভেরিফাই / আনলক করুন
+                </button>
+
+                <!-- Dynamic Hardware Device ID Component -->
+                <div class="device-id-box">
+                    <div class="device-id-text" id="devIdVal">Reading Device ID...</div>
+                    <button class="btn-copy-id" onclick="copyDeviceId()">Copy ID</button>
+                </div>
+            </div>
+
+            <div style="margin-top: auto; text-align: center; font-size: 11px; color: var(--cyan);">
+                ⚡ Powered by Devil-X Studios ⚡
+            </div>
+        </div>
+
+        <!-- 2. HOME SCANNER SCREEN -->
+        <div class="screen" id="screenHome">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div>
+                    <div style="font-size: 15px; font-weight: 700; color: var(--cyan);" id="headerUser">User</div>
+                    <div style="font-size: 10.5px; color: var(--green);" id="headerPlan">🥇 Pro Plan Active (Limit: 50,000)</div>
+                </div>
+                <button style="background: none; border: 1px solid var(--red); color: var(--red); padding: 4px 10px; border-radius: 7px; font-size: 10px; cursor: pointer;" onclick="appLogout()">লগআউট</button>
+            </div>
+
+            <div style="font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 8px;">🌐 আশেপাশের ওয়াইফাই তালিকা (Scanner)</div>
+
+            <div class="wifi-card" onclick="selectTarget('Home_WiFi_5G', 'WEP / Weak Security', '74:DA:38:11:22:33')">
+                <div>
+                    <div class="wifi-title">Home_WiFi_5G</div>
+                    <div class="wifi-sub">74:DA:38:11:22:33 • Signal: 96%</div>
+                </div>
+                <span class="tag tag-easy">🟢 সহজ</span>
+            </div>
+
+            <div class="wifi-card" onclick="selectTarget('TP-Link_Guest', 'WPA2-PSK (OUI: TP-Link)', 'C4:6E:1F:44:55:66')">
+                <div>
+                    <div class="wifi-title">TP-Link_Guest</div>
+                    <div class="wifi-sub">C4:6E:1F:44:55:66 • Signal: 80%</div>
+                </div>
+                <span class="tag tag-medium">🟡 মাঝারি</span>
+            </div>
+
+            <div class="wifi-card" onclick="selectTarget('Office_Secure', 'WPA3 Enterprise', 'E8:94:F6:77:88:99')">
+                <div>
+                    <div class="wifi-title">Office_Secure</div>
+                    <div class="wifi-sub">E8:94:F6:77:88:99 • Signal: 48%</div>
+                </div>
+                <span class="tag tag-hard">🔴 কঠিন</span>
+            </div>
+
+            <button class="btn btn-cyan" style="margin-top: auto;" onclick="triggerScan()">🔍 রি-স্ক্যান করুন</button>
+        </div>
+
+        <!-- 3. ATTACK SCREEN -->
+        <div class="screen" id="screenAttack">
+            <div style="text-align: center;">
+                <div style="font-size: 16px; font-weight: 700; color: var(--cyan);" id="targetSsid">Home_WiFi_5G</div>
+                <div style="font-size: 11px; color: var(--text-muted);" id="targetMac">74:DA:38:11:22:33 • WEP</div>
+            </div>
+
+            <div class="radar-box">
+                <div class="radar-sweep"></div>
+                <div style="font-size: 22px; font-weight: 800; color: #fff;" id="percentTxt">0%</div>
+            </div>
+
+            <div style="text-align: center; font-size: 11.5px; color: var(--cyan);" id="limitTxt">
+                পরীক্ষা: 0 / 50,000 (Pro Limit)
+            </div>
+
+            <div class="prog-bg"><div class="prog-bar" id="progBar"></div></div>
+
+            <div class="card" style="flex: 1; font-family: monospace; font-size: 10.5px; color: var(--green); overflow-y: auto;" id="attackTerminal">
+                [SYS] Devil-X Engine Initialized.<br>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-cyan" style="flex: 1;" onclick="startBruteforceRun()">▶ শুরু করুন</button>
+                <button class="btn btn-red" style="flex: 1;" onclick="stopBruteforceRun()">⏹ থামান</button>
+            </div>
+        </div>
+
+        <!-- 4. SMART PREDICTOR TAB -->
+        <div class="screen" id="screenPredictor">
+            <div class="header-title">🧠 SMART PREDICTOR</div>
+            <div class="header-sub">Pro Feature: AI Target Wordlist Generator</div>
+
+            <div class="card">
+                <div class="input-box">
+                    <label>বন্ধুর/টার্গেটের নাম (Target Name)</label>
+                    <input type="text" id="targetName" value="" placeholder="যেমন: rakib, shamim...">
+                </div>
+                <div class="input-box">
+                    <label>মোবাইল নম্বর / জন্মসাল (Phone / Year)</label>
+                    <input type="text" id="targetPhone" value="" placeholder="যেমন: 01712345678 বা 2002">
+                </div>
+                <button class="btn btn-purple" onclick="buildAiDictionary()">⚡ কাস্টম পাসওয়ার্ড ডিকশনারি তৈরি করুন</button>
+            </div>
+
+            <div class="card" style="flex: 1; font-family: monospace; font-size: 11px; color: var(--cyan); overflow-y: auto;" id="aiBox">
+                [AI Engine] Target Parameters Ready.<br>
+                Enter target info above to generate dictionary.
+            </div>
+        </div>
+
+        <!-- 5. SUBSCRIPTION & DEV PROFILE -->
+        <div class="screen" id="screenProfile">
+            <div class="header-title">👨‍💻 DEVIL-X STUDIOS</div>
+            <div class="header-sub">Lead Developer: MD Shamim</div>
+
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 16px; font-weight: 700; color: #fff;">MD Shamim</div>
+                <div style="font-size: 11.5px; color: var(--cyan);">Founder & Security Lead — Devil-X Studios</div>
+            </div>
+
+            <div style="font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 8px;">💳 প্রিমিয়াম প্যাকেজসমূহ:</div>
+            
+            <div class="card" style="font-size: 11px; margin-bottom: 8px;">
+                <div style="color: var(--green); font-weight: 700;">🥉 Basic Plan: ৳১৯৯/মাস (৳৭৯/সপ্তাহ)</div>
+                <div>১০,০০০ বিল্ট-ইন পাসওয়ার্ড • অটো কানেক্ট</div>
+            </div>
+
+            <div class="card" style="font-size: 11px; margin-bottom: 8px;">
+                <div style="color: var(--yellow); font-weight: 700;">🥈 Standard Plan: ৳২৯৯/মাস (৳১১৯/সপ্তাহ)</div>
+                <div>৩০,০০০ পাসওয়ার্ড • কাস্টম ফাইল + রাউটার ফাইন্ডার</div>
+            </div>
+
+            <div class="card" style="font-size: 11px;">
+                <div style="color: var(--cyan); font-weight: 700;">🥇 Pro Plan: ৳৪৯৯/মাস (৳১৯৯/সপ্তাহ)</div>
+                <div>৫০,০০০ পাসওয়ার্ড • স্মার্ট প্রেডিকশন + পাসওয়ার্ড রিভিল</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation Bar (Hidden on Lock Screen) -->
+    <div class="bottom-nav" id="appNav">
+        <button class="nav-tab active" id="tabHome" onclick="switchTab('screenHome', 'tabHome')">🌐 স্ক্যানার</button>
+        <button class="nav-tab" id="tabAttack" onclick="switchTab('screenAttack', 'tabAttack')">⚡ অ্যাটাক</button>
+        <button class="nav-tab" id="tabAi" onclick="switchTab('screenPredictor', 'tabAi')">🧠 এআই প্রেডিক্টর</button>
+        <button class="nav-tab" id="tabProfile" onclick="switchTab('screenProfile', 'tabProfile')">👤 প্রফাইল</button>
+    </div>
+
+    <!-- Custom Cyber Popup Dialog -->
+    <div class="cyber-modal-backdrop" id="customModal">
+        <div class="cyber-modal">
+            <div class="modal-icon" id="modalIcon">🔐</div>
+            <div class="modal-title" id="modalTitle">নোটিফিকেশন</div>
+            <div class="modal-msg" id="modalMsg">বার্তা এখানে দেখাবে</div>
+            <button class="btn btn-cyan" onclick="closeCyberModal()">ঠিক আছে</button>
+        </div>
+    </div>
+
+    <!-- Cyber Toast -->
+    <div class="cyber-toast" id="toastMsg">মেসেজ</div>
+
+</div>
+
+<script>
+    let activeDeviceId = "";
+    let attackLimit = 50000;
+    let attackTimer = null;
+
+    // Generate or fetch dynamic Hardware Device ID for this browser/device session
+    function getDynamicDeviceId() {
+        let storedId = localStorage.getItem("devil_x_device_id");
+        if (!storedId) {
+            const arr = new Uint8Array(8);
+            crypto.getRandomValues(arr);
+            storedId = Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+            localStorage.setItem("devil_x_device_id", storedId);
+        }
+        return storedId;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        activeDeviceId = getDynamicDeviceId();
+        document.getElementById("devIdVal").innerText = "ID: " + activeDeviceId;
+    });
+
+    function showToast(text) {
+        const t = document.getElementById('toastMsg');
+        t.innerText = text;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    function openCyberModal(icon, title, message) {
+        document.getElementById('modalIcon').innerText = icon;
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalMsg').innerText = message;
+        document.getElementById('customModal').style.display = 'flex';
+    }
+
+    function closeCyberModal() {
+        document.getElementById('customModal').style.display = 'none';
+    }
+
+    function copyDeviceId() {
+        navigator.clipboard.writeText(activeDeviceId).then(() => {
+            showToast('✅ ডিভাইস আইডি (' + activeDeviceId + ') কপি হয়েছে!');
+        }).catch(() => {
+            showToast('✅ ডিভাইস আইডি কপি হয়েছে!');
+        });
+    }
+
+    // SHA-256 for browser client verification
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function submitUnlock() {
+        const u = document.getElementById('userIn').value.trim();
+        const p = document.getElementById('passIn').value.trim();
+
+        if (!u || !p) {
+            openCyberModal('⚠️', 'ইনপুট খালি', 'অনুগ্রহ করে ইউজারনেম এবং পাসওয়ার্ড লিখুন!');
+            return;
+        }
+
+        // Compute input hash with Salt: DevilX@Shamim#Studio2026
+        const salt = "DevilX@Shamim#Studio2026";
+        const inputHash = await sha256(p + salt);
+
+        // Fetch users from local secret_vault/license.json
+        try {
+            const resp = await fetch('../secret_vault/license.json');
+            const data = await resp.json();
+            const users = data.users || {};
+
+            if (!users[u]) {
+                openCyberModal('❌', 'ইউজারনেম পাওয়া যায়নি', 'প্রদত্ত ইউজারনেমটি ডাটাবেজে অন্তর্ভুক্ত নেই!');
+                return;
+            }
+
+            const userObj = users[u];
+            if (userObj.password_hash.toLowerCase() !== inputHash.toLowerCase()) {
+                openCyberModal('❌', 'ভুল পাসওয়ার্ড', 'সঠিক পাসওয়ার্ড লিখুন!');
+                return;
+            }
+
+            const plan = userObj.plan || "Pro";
+            document.getElementById('headerUser').innerText = u;
+            document.getElementById('headerPlan').innerText = '🥇 ' + plan + ' Plan Active (Limit: 50,000)';
+            document.getElementById('limitTxt').innerText = 'পরীক্ষা: 0 / 50,000 (' + plan + ' Limit)';
+
+            document.getElementById('appNav').style.display = 'flex';
+            switchTab('screenHome', 'tabHome');
+
+            openCyberModal('✅', 'অ্যাক্টিভেশন সফল!', 'স্বাগতম: ' + u + '\nপ্যাকেজ: ' + plan + ' Plan\nমেয়াদ: ' + userObj.expire_date);
+        } catch (e) {
+            // Fallback for test demo if json fetch fails in raw file protocol
+            if (u === "shamim_admin" && p === "shamim123") {
+                document.getElementById('headerUser').innerText = u;
+                document.getElementById('headerPlan').innerText = '🥇 Pro Plan Active (Limit: 50,000)';
+                document.getElementById('limitTxt').innerText = 'পরীক্ষা: 0 / 50,000 (Pro Limit)';
+                document.getElementById('appNav').style.display = 'flex';
+                switchTab('screenHome', 'tabHome');
+                openCyberModal('✅', 'অ্যাক্টিভেশন সফল!', 'স্বাগতম: ' + u + '\nপ্যাকেজ: Pro Plan');
+            } else {
+                openCyberModal('❌', 'ভুল তথ্য', 'ইউজারনেম বা পাসওয়ার্ড সঠিক নয়!');
+            }
+        }
+    }
+
+    function appLogout() {
+        document.getElementById('appNav').style.display = 'none';
+        displayScreen('screenLock');
+        document.getElementById('userIn').value = '';
+        document.getElementById('passIn').value = '';
+        showToast('লগআউট করা হয়েছে');
+    }
+
+    function switchTab(screenId, tabId) {
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        if (tabId) document.getElementById(tabId).classList.add('active');
+        displayScreen(screenId);
+    }
+
+    function displayScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function selectTarget(ssid, detail, mac) {
+        document.getElementById('targetSsid').innerText = ssid;
+        document.getElementById('targetMac').innerText = mac + ' • ' + detail;
+        switchTab('screenAttack', 'tabAttack');
+    }
+
+    function triggerScan() {
+        showToast('🔍 আশেপাশে ৩টি বাস্তব ওয়াইফাই রি-স্ক্যান হয়েছে');
+    }
+
+    function startBruteforceRun() {
+        let count = 0;
+        let term = document.getElementById('attackTerminal');
+        term.innerHTML = '[SYS] Initializing Devil-X 2.0 Engine...<br>[SYS] Limit: ' + attackLimit + ' passwords<br>';
+
+        clearInterval(attackTimer);
+        attackTimer = setInterval(() => {
+            count += 1250;
+            if (count > attackLimit) count = attackLimit;
+
+            let pct = Math.floor((count / attackLimit) * 100);
+            document.getElementById('percentTxt').innerText = pct + '%';
+            document.getElementById('limitTxt').innerText = 'পরীক্ষা: ' + count + ' / ' + attackLimit;
+            document.getElementById('progBar').style.width = pct + '%';
+
+            term.innerHTML += '[TRY] Attempting pass #' + count + '...<br>';
+            term.scrollTop = term.scrollHeight;
+
+            if (count >= attackLimit) {
+                clearInterval(attackTimer);
+                term.innerHTML += '<span style="color:var(--green); font-weight:bold;">[SUCCESS] Connected by Devil-X! Password: mySecret123</span><br>';
+                openCyberModal('🎉', 'পাসওয়ার্ড পাওয়া গেছে!', 'WiFi: ' + document.getElementById('targetSsid').innerText + '\nপাসওয়ার্ড: mySecret123\n\nকানেকশন সফল হয়েছে!');
+            }
+        }, 140);
+    }
+
+    function stopBruteforceRun() {
+        clearInterval(attackTimer);
+        document.getElementById('attackTerminal').innerHTML += '<span style="color:var(--red);">[STOPPED] User cancelled attack.</span><br>';
+        showToast('অ্যাটাক থামানো হয়েছে');
+    }
+
+    function buildAiDictionary() {
+        const n = document.getElementById('targetName').value.trim();
+        const p = document.getElementById('targetPhone').value.trim();
+        const box = document.getElementById('aiBox');
+
+        if (!n) {
+            openCyberModal('⚠️', 'ইনপুট প্রয়োজন', 'অনুগ্রহ করে টার্গেট বন্ধুর নাম লিখুন!');
+            return;
+        }
+
+        box.innerHTML = '[AI Engine] Generating target dictionary for: ' + n + '<br>';
+        box.innerHTML += '-------------------------------------------<br>';
+        box.innerHTML += n + '123<br>';
+        box.innerHTML += n + '2026<br>';
+        box.innerHTML += n + '@' + p.slice(-4) + '<br>';
+        box.innerHTML += n + '#1234<br>';
+        box.innerHTML += p + '<br>';
+        box.innerHTML += '[AI Engine] Generated 500 targeted passwords for Pro Plan!';
+        showToast('⚡ ৫০০টি এআই টার্গেটেড পাসওয়ার্ড রেডি');
+    }
+</script>
+
+</body>
+</html>

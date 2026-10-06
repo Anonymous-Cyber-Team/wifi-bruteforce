@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">WifiHacker</string>
+    <string name="app_name">Devil-X WiFi 2.0</string>
+    <string name="developer_name">MD Shamim</string>
+    <string name="studio_name">Devil-X Studios</string>
+    <string name="tagline">Devil-X WiFi Bruteforce 2.0</string>
 </resources>
+

@@ -147,7 +147,7 @@ class WordlistGeneratorApp:
         self._build_ui()
 
     def _setup_window(self):
-        self.root.title("Wordlist Generator — WiFi Bruteforcer Suite")
+        self.root.title("Devil-X Wordlist Generator — Cyber Suite")
         self.root.geometry("860x680")
         self.root.configure(bg=BG_DARK)
         self.root.resizable(True, True)
@@ -162,10 +162,11 @@ class WordlistGeneratorApp:
         header = tk.Frame(self.root, bg=BG_CARD, pady=14)
         header.pack(fill="x")
 
-        tk.Label(header, text="🔐  Wordlist Generator",
-                 font=FONT_TITLE, bg=BG_CARD, fg=ACCENT_PURPLE).pack()
-        tk.Label(header, text="WiFi Password Dictionary Creator",
+        tk.Label(header, text="🔥  DEVIL-X WORDLIST GENERATOR",
+                 font=FONT_TITLE, bg=BG_CARD, fg=ACCENT).pack()
+        tk.Label(header, text="Custom WiFi Dictionary Engine • Developer: MD Shamim | Devil-X Studios",
                  font=FONT_BODY, bg=BG_CARD, fg=TEXT_MUTED).pack()
+
 
         # ── Tabs ──
         tab_frame = tk.Frame(self.root, bg=BG_DARK, pady=10)

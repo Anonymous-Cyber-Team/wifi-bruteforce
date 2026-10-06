@@ -36,9 +36,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
- * Created by Faizan Ahmad on 1/1/2017.
+ * Devil-X WiFi Bruteforce 2.0
+ * Developer: MD Shamim | Devil-X Studios
  */
 public class CrackActivity extends Activity {
+
 
     TextView SSID;
     TextView detail;
@@ -187,7 +189,14 @@ public class CrackActivity extends Activity {
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
-            status.setText("Password is: " + arraylist.get(index-2));
+            android.content.SharedPreferences prefs = getSharedPreferences("devil_x_security", Context.MODE_PRIVATE);
+            String plan = prefs.getString(SplashActivity.KEY_PLAN, "Basic");
+
+            if ("Basic".equalsIgnoreCase(plan)) {
+                status.setText("Connected by Devil-X");
+            } else {
+                status.setText("Password is: " + arraylist.get(index - 2));
+            }
         }
     }
     crackPassword cr;
@@ -207,27 +216,26 @@ public class CrackActivity extends Activity {
 
     public static class myBroadcast extends BroadcastReceiver {
 
-
-
         @Override
         public void onReceive(Context context, Intent intent) {
             System.out.println("MYYYYRECEIVEDDDDDDDDDDDD");
             NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
             if(info != null && info.isConnected()) {
-                // Do your work.
                 System.out.println("CONNECTEDDDDDDDDDDDDDDDDDDD");
-                // e.g. To check the Network Name or other info:
-
             }
         }
     }
 
     public void notifyPassword() {
+        android.content.SharedPreferences prefs = getSharedPreferences("devil_x_security", Context.MODE_PRIVATE);
+        String plan = prefs.getString(SplashActivity.KEY_PLAN, "Basic");
+        String messageText = "Basic".equalsIgnoreCase(plan) ? "Connected by Devil-X" : arraylist.get(index - 2);
+
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.fsecurify_white_icon)
-                        .setContentTitle("Password Cracked")
-                        .setContentText(arraylist.get(index-2));
+                        .setContentTitle("Connected by Devil-X")
+                        .setContentText(messageText);
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
@@ -238,6 +246,7 @@ public class CrackActivity extends Activity {
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
+
 
 
     @Override

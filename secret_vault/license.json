@@ -1,0 +1,19 @@
+{
+  "app_meta": {
+    "app_name": "Devil-X WiFi Bruteforce 2.0",
+    "developer": "MD Shamim",
+    "brand": "Devil-X",
+    "studio": "Devil-X Studios",
+    "salt_signature": "DX-2026-ACTIVE"
+  },
+  "users": {
+    "shamim_admin": {
+      "username": "MD Shamim",
+      "password_hash": "1c5ad0a3b87e895e42ffd76b632a8568877017feb6b4a19903b807674005cd49",
+      "device_id": "",
+      "expire_date": "2030-12-31 23:59:59",
+      "plan": "Pro",
+      "status": "active"
+    }
+  }
+}

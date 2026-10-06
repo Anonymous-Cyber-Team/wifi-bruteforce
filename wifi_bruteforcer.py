@@ -1,6 +1,6 @@
 """
-WiFi Bruteforcer — Windows Desktop Tool
-Based on: github.com/faizann24/wifi-bruteforcer-fsecurify
+Devil-X WiFi Bruteforce 2.0 — Windows Desktop Cyber Tool
+Developer: MD Shamim | Devil-X Studios
 Requires: pip install PyQt5 pywifi
 """
 
@@ -16,15 +16,17 @@ from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 from PyQt5.QtGui import QFont, QColor, QPalette, QIcon, QTextCursor
 
 # ── Security & Remote License Verification ───────────────────────────────────
-REMOTE_LICENSE_URL = "https://raw.githubusercontent.com/Anonymous-Cyber-Team/wifi-bruteforce/main/license.json"
-LICENSE_FILE = os.path.join(os.path.expanduser("~"), ".wifi_suite_activation.json")
+SALT_KEY = "DevilX@Shamim#Studio2026"
+REMOTE_LICENSE_URL = "https://raw.githubusercontent.com/Anonymous-Cyber-Team/wifi-bruteforce/main/secret_vault/license.json"
+LOCAL_LICENSE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "secret_vault", "license.json")
+LICENSE_FILE = os.path.join(os.path.expanduser("~"), ".devil_x_activation.json")
 
 def is_activated():
     if os.path.exists(LICENSE_FILE):
         try:
             with open(LICENSE_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                expire_str = data.get("expire_at")
+                expire_str = data.get("expire_date") or data.get("expire_at")
                 if expire_str:
                     expire_dt = datetime.strptime(expire_str, "%Y-%m-%d %H:%M:%S")
                     if datetime.now() < expire_dt:
@@ -33,12 +35,13 @@ def is_activated():
             return False
     return False
 
-def set_activated(username, expire_at):
+def set_activated(username, expire_at, plan="Pro"):
     try:
         with open(LICENSE_FILE, "w", encoding="utf-8") as f:
-            json.dump({"username": username, "expire_at": expire_at, "status": "active"}, f)
+            json.dump({"username": username, "expire_date": expire_at, "plan": plan, "status": "active"}, f)
     except Exception:
         pass
+
 
 # ── pywifi optional ──────────────────────────────────────────────────────────
 try:
@@ -329,7 +332,7 @@ class WiFiBruteforcer(QMainWindow):
         self._scan_networks()
 
     def _setup_window(self):
-        self.setWindowTitle("WiFi Bruteforcer — Windows Edition")
+        self.setWindowTitle("Devil-X WiFi Bruteforce 2.0 — Cyber Suite")
         self.setMinimumSize(960, 700)
         self.resize(1060, 740)
         self.setStyleSheet(STYLESHEET)
@@ -348,13 +351,14 @@ class WiFiBruteforcer(QMainWindow):
         h_lay.setContentsMargins(24, 16, 24, 16)
         h_lay.setSpacing(4)
 
-        title = QLabel("📡  WiFi Bruteforcer")
+        title = QLabel("🔥  DEVIL-X WIFI BRUTEFORCE 2.0")
         title.setObjectName("title")
-        sub   = QLabel("Windows Edition  •  Based on faizann24/wifi-bruteforcer-fsecurify")
+        sub   = QLabel("Pro Cyber Edition  •  Developer: MD Shamim | Devil-X Studios")
         sub.setObjectName("subtitle")
         h_lay.addWidget(title)
         h_lay.addWidget(sub)
         root.addWidget(header)
+
 
         # ── Warning ──────────────────────────────────────────────────────────
         warn = QLabel("⚠️  শুধুমাত্র শিক্ষামূলক উদ্দেশ্যে | নিজের নেটওয়ার্কে পরীক্ষা করুন | Unauthorized access is illegal.")
@@ -393,8 +397,9 @@ class WiFiBruteforcer(QMainWindow):
 
         sb_lay.addWidget(self.status_lbl)
         sb_lay.addStretch()
-        dev_toast = QLabel("✨ Development by MD Shamim ✨")
-        dev_toast.setStyleSheet("color:#58a6ff; font-weight:bold; font-size:9pt; background:#1c2128; border:1px solid #30363d; border-radius:10px; padding:3px 14px;")
+        dev_toast = QLabel("⚡ Devil-X Studios | MD Shamim ⚡")
+        dev_toast.setStyleSheet("color:#00e5ff; font-weight:bold; font-size:9pt; background:#1c2128; border:1px solid #00e5ff44; border-radius:10px; padding:3px 14px;")
+
         sb_lay.addWidget(dev_toast)
         sb_lay.addStretch()
         sb_lay.addWidget(mode_lbl)
@@ -814,8 +819,8 @@ class LockDialog(QDialog):
         layout.setSpacing(12)
 
         # Title
-        t = QLabel("🔐 Software Activation Lock")
-        t.setStyleSheet("color:#58a6ff; font-size:14pt; font-weight:bold;")
+        t = QLabel("🔥 DEVIL-X ACTIVATION LOCK")
+        t.setStyleSheet("color:#00e5ff; font-size:14pt; font-weight:bold; letter-spacing:1px;")
         t.setAlignment(Qt.AlignCenter)
         layout.addWidget(t)
 
@@ -826,7 +831,7 @@ class LockDialog(QDialog):
 
         # Username Input
         self.user_input = QLineEdit()
-        self.user_input.setPlaceholderText("ইউজারনেম লিখুন...")
+        self.user_input.setPlaceholderText("ইউজারনেম লিখুন (যেমন: shamim_admin)...")
         layout.addWidget(self.user_input)
 
         # Password Input
@@ -852,11 +857,11 @@ class LockDialog(QDialog):
         layout.addStretch()
 
         # Toast notification at bottom
-        toast = QLabel("✨ Development by MD Shamim ✨")
+        toast = QLabel("⚡ Powered by Devil-X Studios | MD Shamim ⚡")
         toast.setStyleSheet("""
             background-color: #1c2128;
-            color: #58a6ff;
-            border: 1px solid #388bfd44;
+            color: #00e5ff;
+            border: 1px solid #00e5ff44;
             border-radius: 12px;
             padding: 6px 14px;
             font-size: 9pt;
@@ -875,18 +880,34 @@ class LockDialog(QDialog):
             self.err_lbl.setText("অনুগ্রহ করে পাসওয়ার্ড দিন!")
             return
 
-        self.err_lbl.setStyleSheet("color:#58a6ff; font-size:9pt;")
-        self.err_lbl.setText("সার্ভার থেকে লাইসেন্স যাচাই করা হচ্ছে...")
+        self.err_lbl.setStyleSheet("color:#00e5ff; font-size:9pt;")
+        self.err_lbl.setText("লাইসেন্স যাচাই করা হচ্ছে...")
         QApplication.processEvents()
 
+        data = None
+        # 1. Try remote license URL
         try:
             req = urllib.request.Request(
                 REMOTE_LICENSE_URL,
                 headers={"User-Agent": "Mozilla/5.0"}
             )
-            with urllib.request.urlopen(req, timeout=10) as resp:
+            with urllib.request.urlopen(req, timeout=5) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
+        except Exception:
+            # 2. Fallback to local secret_vault/license.json
+            if os.path.exists(LOCAL_LICENSE_PATH):
+                try:
+                    with open(LOCAL_LICENSE_PATH, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                except Exception:
+                    pass
 
+        if not data:
+            self.err_lbl.setStyleSheet("color:#f85149; font-size:9pt;")
+            self.err_lbl.setText("❌ লাইসেন্স সার্ভার বা লোকাল ফাইলে সংযোগ করা যায়নি!")
+            return
+
+        try:
             users = data.get("users", {})
             if user not in users:
                 self.err_lbl.setStyleSheet("color:#f85149; font-size:9pt;")
@@ -894,16 +915,18 @@ class LockDialog(QDialog):
                 return
 
             user_data = users[user]
+            display_name = user_data.get("username", user)
             expected_hash = user_data.get("password_hash", "")
             status = user_data.get("status", "active")
-            expire_at_str = user_data.get("expire_at", "")
+            expire_str = user_data.get("expire_date") or user_data.get("expire_at", "")
+            plan = user_data.get("plan", "Pro")
 
             if status != "active":
                 self.err_lbl.setStyleSheet("color:#f85149; font-size:9pt;")
                 self.err_lbl.setText("❌ এই ইউজারের এক্সেস স্থগিত (Blocked) করা আছে!")
                 return
 
-            input_hash = hashlib.sha256(pw.encode("utf-8")).hexdigest().lower()
+            input_hash = hashlib.sha256((pw + SALT_KEY).encode("utf-8")).hexdigest().lower()
             if input_hash != expected_hash.lower():
                 self.err_lbl.setStyleSheet("color:#f85149; font-size:9pt;")
                 self.err_lbl.setText("❌ ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।")
@@ -912,23 +935,24 @@ class LockDialog(QDialog):
                 return
 
             # Check expiry
-            if expire_at_str:
-                expire_dt = datetime.strptime(expire_at_str, "%Y-%m-%d %H:%M:%S")
+            if expire_str:
+                expire_dt = datetime.strptime(expire_str, "%Y-%m-%d %H:%M:%S")
                 if datetime.now() > expire_dt:
                     self.err_lbl.setStyleSheet("color:#f85149; font-size:9pt;")
-                    self.err_lbl.setText(f"❌ মেয়াদ শেষ ({expire_at_str})! রিনিউ করুন।")
+                    self.err_lbl.setText(f"❌ মেয়াদ শেষ ({expire_str})! রিনিউ করুন।")
                     return
 
-            set_activated(user, expire_at_str)
+            set_activated(user, expire_str, plan)
             QMessageBox.information(
                 self, "সফল",
-                f"✅ সফটওয়্যার সফলভাবে আনলক হয়েছে!\nস্বাগতম: {user}\nলাইসেন্স মেয়াদ: {expire_at_str}"
+                f"✅ Devil-X সফলভাবে আনলক হয়েছে!\nস্বাগতম: {display_name}\nপ্যাকেজ: {plan}\nমেয়াদ: {expire_str}"
             )
             self.accept()
 
         except Exception as e:
             self.err_lbl.setStyleSheet("color:#f85149; font-size:9pt;")
-            self.err_lbl.setText(f"⚠️ সার্ভার সংযোগ ত্রুটি: {e}")
+            self.err_lbl.setText(f"⚠️ যাচাইকরণ ত্রুটি: {e}")
+
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────

@@ -5,7 +5,8 @@ import android.app.Application;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created by Faizan Ahmad on 1/1/2017.
+ * Devil-X WiFi Bruteforce 2.0
+ * Developer: MD Shamim | Devil-X Studios
  */
 public class Font extends Application {
     @Override

@@ -1,110 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#101010">
+    android:background="#0A0A0F">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SSID Name"
         android:id="@+id/ssidname"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffffff"
-        android:textSize="26sp"
-        android:background="#8c1313"
-        android:paddingTop="15dp"
+        android:textColor="#00E5FF"
+        android:textSize="22sp"
+        android:background="#12121C"
+        android:paddingTop="14dp"
         android:gravity="center"
         android:textStyle="bold" />
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Security Detail"
         android:id="@+id/detail"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="15dp"
-        android:autoText="false"
-        android:background="#8c1313"
-        android:paddingTop="3dp"
-        android:paddingBottom="10dp"
+        android:background="#12121C"
+        android:paddingTop="4dp"
+        android:paddingBottom="12dp"
         android:gravity="center"
-        android:textColor="#e1e1e1" />
+        android:textColor="#B0BEC5"
+        android:textSize="12sp"
+        android:layout_marginBottom="16dp" />
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="400dp">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
             android:id="@+id/progressBar"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
             android:indeterminate="false"
             android:max="10000"
             android:progress="0"
-            android:progressDrawable="@drawable/progressbar"
-            android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
             android:id="@+id/passwords"
-            android:layout_centerVertical="true"
+            android:layout_above="@+id/progressBar"
             android:layout_centerHorizontal="true"
-            android:textColor="#ffffff"
-            android:textSize="32sp" />
+            android:textColor="#00E5FF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Passwords Tried"
+            android:text="পরীক্ষা করা হয়েছে (Passwords Tried)"
             android:id="@+id/textView5"
-            android:textColor="#ffffff"
-            android:layout_below="@+id/passwords"
-            android:layout_centerHorizontal="true" />
+            android:textColor="#9AA0A6"
+            android:textSize="13sp"
+            android:layout_below="@+id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
     </RelativeLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Status"
+        android:text="স্ট্যাটাস: অপেক্ষারত"
         android:id="@+id/status"
-        android:layout_gravity="center_horizontal"
-        android:textSize="20sp"
-        android:textColor="#ffffff"
-        android:layout_marginBottom="5dp" />
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="#12121C">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="▶ আক্রমণ শুরু করুন"
             android:id="@+id/button"
-            android:layout_gravity="center_horizontal"
             android:onClick="onCrackStart"
             android:layout_weight="1"
             android:textColor="#ffffff"
-            android:background="#8c1313" />
+            android:textStyle="bold"
+            android:background="#00A896"
+            android:layout_marginRight="6dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="⏹ থামান"
             android:id="@+id/button2"
-            android:layout_gravity="center_horizontal"
             android:onClick="stop"
             android:layout_weight="1"
             android:textColor="#ffffff"
-            android:background="#8c1313" />
+            android:textStyle="bold"
+            android:background="#FF1744"
+            android:layout_marginLeft="6dp" />
     </LinearLayout>
 
 </LinearLayout>

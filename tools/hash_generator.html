@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devil-X — Hash & License Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card-bg: rgba(18, 18, 28, 0.85);
+            --border: rgba(0, 229, 255, 0.2);
+            --cyan: #00e5ff;
+            --purple: #7b2fbe;
+            --green: #00ff88;
+            --text-main: #ffffff;
+            --text-muted: #9aa0a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(123, 47, 190, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 229, 255, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 229, 255, 0.05);
+            backdrop-filter: blur(12px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--cyan), #ffffff, var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+        }
+
+        .row {
+            display: flex;
+            gap: 14px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00b4d8, var(--purple));
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            margin-top: 6px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.3);
+        }
+
+        .result-box {
+            margin-top: 24px;
+            background: #08080c;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 10px;
+            padding: 18px;
+            display: none;
+        }
+
+        .result-box.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .output-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-copy {
+            background: rgba(0, 255, 136, 0.15);
+            border: 1px solid var(--green);
+            color: var(--green);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: var(--green);
+            color: #000000;
+            font-weight: 600;
+        }
+
+        pre {
+            background: #040407;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 12px;
+            color: #79c0ff;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>DEVIL-X GENERATOR</h1>
+        <p>MD Shamim | Devil-X Studios — লাইসেন্স ও হ্যাশ তৈরির অফলাইন টুল</p>
+    </div>
+
+    <form id="genForm" onsubmit="event.preventDefault(); generateAll();">
+        <div class="form-group">
+            <label for="username">ইউজারনেম (User Identifier / নাম)</label>
+            <input type="text" id="username" placeholder="উদাহরণ: Shamim_Vip বা friend_01" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rawPass">পাসওয়ার্ড (যা ইউজারকে দিবেন)</label>
+            <input type="text" id="rawPass" placeholder="উদাহরণ: mySecret123" required>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="plan">প্ল্যান (Plan)</label>
+                <select id="plan">
+                    <option value="Pro" selected>🥇 Pro (সম্পূর্ণ ফিচার)</option>
+                    <option value="Standard">🥈 Standard (মাঝারি)</option>
+                    <option value="Basic">🥉 Basic (১০k ডিফল্ট)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="days">মেয়াদ (দিন)</label>
+                <input type="number" id="days" value="30" min="1" max="3650">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="deviceId">ডিভাইস আইডি (Device ID — অপশনাল)</label>
+            <input type="text" id="deviceId" placeholder="ইউজারের ফোন থেকে কপি করা আইডি (না থাকলে খালি রাখুন)">
+        </div>
+
+        <div class="form-group">
+            <label for="saltKey">সিক্রেট কি (Locked Salt)</label>
+            <input type="text" id="saltKey" value="DevilX@Shamim#Studio2026" readonly style="opacity: 0.8; color: var(--cyan);">
+        </div>
+
+        <button type="submit" class="btn-primary">হ্যাশ ও লাইসেন্স কোড তৈরি করুন</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+        <div class="output-header">
+            <span class="output-title">SHA-256 হ্যাশ (Hash Only)</span>
+            <button class="btn-copy" onclick="copyText('hashOutput')">কপি হ্যাশ</button>
+        </div>
+        <pre id="hashOutput"></pre>
+
+        <div class="output-header" style="margin-top: 16px;">
+            <span class="output-title">license.json এ পেস্ট করার কোড ব্লক</span>
+            <button class="btn-copy" onclick="copyText('jsonOutput')">কপি JSON ব্লক</button>
+        </div>
+        <pre id="jsonOutput"></pre>
+    </div>
+
+    <div class="footer-note">
+        সম্পূর্ণ অফলাইন ও নিরাপদ | Devil-X WiFi Bruteforce 2.0
+    </div>
+</div>
+
+<script>
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function generateAll() {
+        const username = document.getElementById('username').value.trim();
+        const rawPass = document.getElementById('rawPass').value.trim();
+        const plan = document.getElementById('plan').value;
+        const days = parseInt(document.getElementById('days').value) || 30;
+        const deviceId = document.getElementById('deviceId').value.trim();
+        const salt = document.getElementById('saltKey').value;
+
+        if (!username || !rawPass) {
+            alert('ইউজারনেম এবং পাসওয়ার্ড পূরণ করুন!');
+            return;
+        }
+
+        // Generate SHA256 of (Password + Salt)
+        const combined = rawPass + salt;
+        const hash = await sha256(combined);
+
+        // Calculate Expiration Date
+        const now = new Date();
+        now.setDate(now.getDate() + days);
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const expireDate = `${yyyy}-${mm}-${dd} 23:59:59`;
+
+        // Build clean JSON snippet
+        const jsonSnippet = `"${username}": {
+  "username": "${username}",
+  "password_hash": "${hash}",
+  "device_id": "${deviceId}",
+  "expire_date": "${expireDate}",
+  "plan": "${plan}",
+  "status": "active"
+}`;
+
+        document.getElementById('hashOutput').textContent = hash;
+        document.getElementById('jsonOutput').textContent = jsonSnippet;
+        document.getElementById('resultBox').classList.add('active');
+    }
+
+    function copyText(elementId) {
+        const text = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            alert('কপি করা হয়েছে!');
+        });
+    }
+</script>
+
+</body>
+</html>

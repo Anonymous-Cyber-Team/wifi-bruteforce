@@ -1,80 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context="com.example.jamsh.healthme.SplashActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#8c1313"
-    android:gravity="center">
+    android:background="#0A0A0F"
+    android:gravity="center"
+    android:padding="20dp">
 
-    <ImageView
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:id="@+id/imageView3"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/wifi_fsecurify"
-        android:layout_marginTop="20dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔥 DEVIL-X WIFI 2.0"
+        android:textColor="#00E5FF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Developer: MD Shamim | Devil-X Studios"
+        android:textColor="#9AA0A6"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
 
     <LinearLayout
         android:id="@+id/lock_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:background="#12121C"
+        android:padding="20dp"
         android:gravity="center"
         android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🔐 SOFTWARE LOCKED"
+            android:text="🔐 SOFTWARE ACTIVATION LOCK"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="14dp" />
 
         <EditText
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="ইউজারনেম লিখুন..."
-            android:textColorHint="#CCCCCC"
+            android:textColorHint="#666666"
             android:textColor="#FFFFFF"
             android:inputType="text"
             android:padding="10dp"
-            android:background="#4A0505"
-            android:layout_marginBottom="10dp" />
+            android:background="#1A1A26"
+            android:layout_marginBottom="12dp" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:hint="পাসওয়ার্ড লিখুন..."
-            android:textColorHint="#CCCCCC"
+            android:textColorHint="#666666"
             android:textColor="#FFFFFF"
             android:inputType="textPassword"
             android:padding="10dp"
-            android:background="#4A0505"
-            android:layout_marginBottom="14dp" />
+            android:background="#1A1A26"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:id="@+id/btn_verify"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="ভেরিফাই / আনলক করুন"
+            android:text="🔑 ভেরিফাই / আনলক করুন"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            android:background="#2E7D32" />
+            android:background="#00A896"
+            android:layout_marginBottom="14dp" />
+
+        <!-- Dynamic Device ID Box & Copy Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#1A1A26"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_device_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Device ID: Reading..."
+                android:textColor="#00E5FF"
+                android:textSize="12sp"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/btn_copy_device_id"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Copy ID"
+                android:textColor="#00E5FF"
+                android:textSize="11sp"
+                android:background="#242436"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+        </LinearLayout>
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="100dp"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/fsecurify_white_logo" />
+        android:text="⚡ Devil-X Studios • Official Release ⚡"
+        android:textColor="#00E5FF"
+        android:textSize="11sp"
+        android:layout_marginTop="24dp"
+        android:gravity="center" />
+
 </LinearLayout>
